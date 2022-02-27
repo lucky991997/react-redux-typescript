@@ -8,11 +8,10 @@ import {
 } from "../action-creator/ActionCreator";
 
 type AmountProps = {
-    total: number
-}
+  total: number;
+};
 
-const DepositBank = ({total}: AmountProps) => {
-
+const DepositBank = ({ total }: AmountProps) => {
   const dispatch = useDispatch();
   const deposit = bindActionCreators(depositBank, dispatch);
   const withdraw = bindActionCreators(withdrawBank, dispatch);
@@ -22,22 +21,32 @@ const DepositBank = ({total}: AmountProps) => {
   useEffect(() => {
     inputRef.current?.focus();
   }, []);
+
   const handleDeposit = () => {
     // dispatch({
     //     type: ActionType.DEPOSIT,
     //     payload: +amount, //convert number
     // })
-    deposit(+amount);
-    inputRef.current?.focus();
-    setAmount("");
+    if (amount !== "") {
+      deposit(+amount);
+      inputRef.current?.focus();
+      setAmount("");
+    } else {
+      alert("Vui lòng nhập số tiền cần giao dịch");
+    }
   };
   const handleWithDraw = () => {
-    if(total > +amount) {
+    if (amount !== "") {
+      if (total > +amount) {
         withdraw(+amount);
         inputRef.current?.focus();
         setAmount("");
+      } else {
+        alert("số tiền cần rút lớn hơn số tiền có trong tài khoản");
+      }
     }else {
-        alert('deposit nhỏ hơn số tiền rút')
+      alert("Vui lòng nhập số tiền cần giao dịch");
+
     }
   };
   const handleResetBank = () => {
@@ -55,8 +64,8 @@ const DepositBank = ({total}: AmountProps) => {
       />
       <br />
       <button onClick={() => handleDeposit()}>Deposit</button>
-      <button onClick={() => handleWithDraw()}>Deposit</button>
-      <button onClick={() => handleResetBank()}>Deposit</button>
+      <button onClick={() => handleWithDraw()}>withdraw</button>
+      {/* <button onClick={() => handleResetBank()}>resetBank</button> */}
     </>
   );
 };

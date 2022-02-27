@@ -1,5 +1,5 @@
 import React from 'react';
-import DepositBank from './components/DepositBank';
+import DepositBank from './components/Bank';
 import {useSelector} from 'react-redux'
 import { State } from './redux/index'
 
